@@ -5,16 +5,16 @@ name = "ssz-withdrawals"
 edition = "2021"
 
 [dependencies]
-sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "ffe408a" }
+sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "v1.1.1" }
 hex-literal = "0.4.1"
 sha2 = "0.9.8"
 sha2_risc0 = { package = "sha2", git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.6-risczero.0" }
 sha2_sp1 = { package = "sha2", git = "https://github.com/sp1-patches/RustCrypto-hashes" }
 ssz_rs = { version = "0.9.0", features = ["serde"] }
-serde_json = "1.0.111"
+serde_json = "1.0"
 hex = "0.4.3"
 serde_with = { version = "3.4.0", features = ["hex"] }
-serde = { version = "1.0.195", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
 alloy-primitives = "0.6.0"
 cfg-if = "1.0.0"
 risc0-zkvm = { version = "1.0.1", default-features = false, features = [

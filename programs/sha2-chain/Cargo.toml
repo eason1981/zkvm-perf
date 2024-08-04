@@ -7,7 +7,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "ffe408a" }
+sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "v1.1.1" }
 risc0-zkvm = { version = "1.0.1", default-features = false, features = [
     "std",
 ] }

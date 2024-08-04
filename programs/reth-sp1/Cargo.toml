@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 alloy-rlp = { version = "0.3", default-features = false }
-sp1-zkvm = { git = "https://github.com/succinctlabs/sp1.git" }
+sp1-zkvm = { git = "https://github.com/succinctlabs/sp1.git", rev = "v1.1.1" }
 sp1-reth-primitives = { git = "https://github.com/succinctlabs/sp1-reth.git", branch = "ratan/try-new-revm" }
 
 reth-primitives = { git = "https://github.com/sp1-patches/reth-new", branch = "ratan/feature-gate-secp256k1", default-features = false }
