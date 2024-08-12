@@ -1,8 +1,8 @@
 use std::time::Instant;
 
-use jolt::{
+use jolt_sdk::{
     host::{analyze::ProgramSummary, Program},
-    Jolt, JoltPreprocessing, Proof, RV32IJoltVM, F, G,
+    HyraxScheme, Jolt, JoltPreprocessing, RV32IHyraxProof, RV32IJoltVM, F, G,
 };
 
 use crate::{EvalArgs, PerformanceReport, PerformanceReportGenerator, ProgramId};
@@ -15,6 +15,7 @@ pub struct JoltPerformanceReportGenerator {}
 
 struct ProveAndVerifyResult {
     total_cycles: u64,
+    overhead_duration: f64,
     prove_duration: f64,
     verify_duration: f64,
     proof_size: usize,
@@ -23,11 +24,11 @@ struct ProveAndVerifyResult {
 fn get_jolt_statistics<P>(
     analyze: fn() -> ProgramSummary,
     program: Program,
-    preprocessing: JoltPreprocessing<F, G>,
+    preprocessing: JoltPreprocessing<F, HyraxScheme<G>>,
     prove: P,
 ) -> ProveAndVerifyResult
 where
-    P: Fn(Program, JoltPreprocessing<F, G>) -> Proof,
+    P: Fn(Program, JoltPreprocessing<F, HyraxScheme<G>>) -> RV32IHyraxProof,
 {
     // Get the cycle count of the program.
     let summary = analyze();
@@ -53,6 +54,7 @@ where
 
     ProveAndVerifyResult {
         total_cycles: total_cycles as u64,
+        overhead_duration: 0.0,
         prove_duration,
         verify_duration,
         proof_size,
@@ -62,13 +64,13 @@ where
 fn get_jolt_statistics_v2<P>(
     analyze: fn([u8; 32], u32) -> ProgramSummary,
     program: Program,
-    preprocessing: JoltPreprocessing<F, G>,
+    preprocessing: JoltPreprocessing<F, HyraxScheme<G>>,
     prove: P,
     a: [u8; 32],
     b: u32,
 ) -> ProveAndVerifyResult
 where
-    P: Fn(Program, JoltPreprocessing<F, G>) -> Proof,
+    P: Fn(Program, JoltPreprocessing<F, HyraxScheme<G>>) -> RV32IHyraxProof,
 {
     // Get the cycle count of the program.
     let summary = analyze(a, b);
@@ -94,6 +96,7 @@ where
 
     ProveAndVerifyResult {
         total_cycles: total_cycles as u64,
+        overhead_duration: 0.0,
         prove_duration,
         verify_duration,
         proof_size,
@@ -105,60 +108,87 @@ fn get_jolt_statistics_for_program(program: ProgramId) -> ProveAndVerifyResult {
         ProgramId::Fibonacci => {
             println!("Preprocessing fibonacci");
             // Preprocess to separate compilation and trace generation separately from proving.
+            let overhead_start = Instant::now();
             let (program, preprocessing) = preprocess_fibonacci();
+            let overhead_duration = overhead_start.elapsed().as_secs_f64();
             println!("Starting proving");
             // Wrap the prove function in a closure that ignores the output.
-            let prove_wrapper = |program: Program, preprocessing: JoltPreprocessing<F, G>| {
-                let (_, proof) = prove_fibonacci(program, preprocessing);
-                proof
-            };
-            get_jolt_statistics(analyze_fibonacci, program, preprocessing, prove_wrapper)
+            let prove_wrapper =
+                |program: Program, preprocessing: JoltPreprocessing<F, HyraxScheme<G>>| {
+                    let (_, proof) = prove_fibonacci(program, preprocessing);
+                    proof
+                };
+            let mut res =
+                get_jolt_statistics(analyze_fibonacci, program, preprocessing, prove_wrapper);
+            res.overhead_duration = overhead_duration;
+
+            res
         }
         ProgramId::Loop => {
             println!("Preprocessing loop");
             // Preprocess to separate compilation and trace generation separately from proving.
+            let overhead_start = Instant::now();
             let (program, preprocessing) = preprocess_loop_jolt();
+            let overhead_duration = overhead_start.elapsed().as_secs_f64();
             println!("Starting proving");
             // Wrap the prove function in a closure that ignores the output.
-            let prove_wrapper = |program: Program, preprocessing: JoltPreprocessing<F, G>| {
-                let (_, proof) = prove_loop_jolt(program, preprocessing);
-                proof
-            };
-            get_jolt_statistics(analyze_loop_jolt, program, preprocessing, prove_wrapper)
+            let prove_wrapper =
+                |program: Program, preprocessing: JoltPreprocessing<F, HyraxScheme<G>>| {
+                    let (_, proof) = prove_loop_jolt(program, preprocessing);
+                    proof
+                };
+            let mut res =
+                get_jolt_statistics(analyze_loop_jolt, program, preprocessing, prove_wrapper);
+            res.overhead_duration = overhead_duration;
+
+            res
         }
         ProgramId::Tendermint => {
             println!("Preprocessing tendermint");
             // Preprocess to separate compilation and trace generation separately from proving.
+            let overhead_start = Instant::now();
             let (program, preprocessing) = preprocess_tendermint();
+            let overhead_duration = overhead_start.elapsed().as_secs_f64();
             println!("Starting proving");
             // Wrap the prove function in a closure that ignores the output.
-            let prove_wrapper = |program: Program, preprocessing: JoltPreprocessing<F, G>| {
-                let (_, proof) = prove_tendermint(program, preprocessing);
-                proof
-            };
-            get_jolt_statistics(analyze_tendermint, program, preprocessing, prove_wrapper)
+            let prove_wrapper =
+                |program: Program, preprocessing: JoltPreprocessing<F, HyraxScheme<G>>| {
+                    let (_, proof) = prove_tendermint(program, preprocessing);
+                    proof
+                };
+            let mut res =
+                get_jolt_statistics(analyze_tendermint, program, preprocessing, prove_wrapper);
+            res.overhead_duration = overhead_duration;
+
+            res
         }
         ProgramId::Sha2Chain => {
             println!("Preprocessing sha2-chain");
             // Preprocess to separate compilation and trace generation separately from proving.
+            let overhead_start = Instant::now();
             let (program, preprocessing) = preprocess_sha2_chain();
+            let overhead_duration = overhead_start.elapsed().as_secs_f64();
             println!("Starting proving");
             // Wrap the prove function in a closure that ignores the output.
             let input = [5u8; 32];
             // let num_iters: u32 = 2500;
             let num_iters: u32 = 200;
-            let prove_wrapper = |program: Program, preprocessing: JoltPreprocessing<F, G>| {
-                let (_, proof) = prove_sha2_chain(program, preprocessing, input, num_iters);
-                proof
-            };
-            get_jolt_statistics_v2(
+            let prove_wrapper =
+                |program: Program, preprocessing: JoltPreprocessing<F, HyraxScheme<G>>| {
+                    let (_, proof) = prove_sha2_chain(program, preprocessing, input, num_iters);
+                    proof
+                };
+            let mut res = get_jolt_statistics_v2(
                 analyze_sha2_chain,
                 program,
                 preprocessing,
                 prove_wrapper,
                 input,
                 num_iters,
-            )
+            );
+            res.overhead_duration = overhead_duration;
+
+            res
         }
         _ => {
             todo!();
