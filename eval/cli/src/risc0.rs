@@ -1,4 +1,5 @@
 use std::fs;
+use std::time::Instant;
 
 use crate::HashFnId;
 use crate::{get_elf, time_operation, EvalArgs, PerformanceReport, PerformanceReportGenerator};
@@ -16,6 +17,7 @@ impl PerformanceReportGenerator for Risc0PerformanceReportGenerator {
             panic!("Only Poseidon hash function is supported for Risc0.");
         }
 
+        let overhead_start = Instant::now();
         let elf_path = get_elf(args);
         // Read the program from the file system.
         let elf = fs::read(&elf_path).unwrap();
@@ -43,6 +45,7 @@ impl PerformanceReportGenerator for Risc0PerformanceReportGenerator {
         // Generate the session.
         let mut exec = ExecutorImpl::from_elf(env, &elf).unwrap();
         let (session, execution_duration) = time_operation(|| exec.run().unwrap());
+        let overhead_duration = overhead_start.elapsed().as_secs_f64();
 
         // Generate the proof.
         let ctx = VerifierContext::default();
@@ -95,13 +98,14 @@ impl PerformanceReportGenerator for Risc0PerformanceReportGenerator {
         // Create the performance report.
         PerformanceReport {
             program: args.program.to_string(),
+            benchmark_size: 0,
             prover: args.prover.to_string(),
             hashfn: args.hashfn.to_string(),
             shard_size: args.shard_size,
             shards: num_segments,
             cycles: cycles as u64,
             speed: (cycles as f64) / prove_duration.as_secs_f64(),
-            execution_duration: execution_duration.as_secs_f64(),
+            overhead_duration,
             prove_duration: prove_duration.as_secs_f64(),
             core_prove_duration: core_prove_duration.as_secs_f64(),
             core_verify_duration: core_verify_duration.as_secs_f64(),

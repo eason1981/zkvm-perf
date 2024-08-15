@@ -203,13 +203,14 @@ impl PerformanceReportGenerator for JoltPerformanceReportGenerator {
         // Create the performance report.
         PerformanceReport {
             program: args.program.to_string(),
+            benchmark_size: 0,
             prover: args.prover.to_string(),
             hashfn: args.hashfn.to_string(),
             shard_size: 0,
             shards: 0,
             cycles: res.total_cycles,
             speed: (res.total_cycles as f64 / res.prove_duration) as f64,
-            execution_duration: 0.0,
+            overhead_duration: res.overhead_duration,
             prove_duration: 0.0,
             core_prove_duration: res.prove_duration,
             core_verify_duration: res.verify_duration,

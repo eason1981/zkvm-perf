@@ -3,8 +3,8 @@
 #[jolt::provable]
 fn fibonacci() -> u32 {
     // let n = 300000;
-    let n = 131072;
-    // let n = 524288;
+    // let n = 131072;
+    let n = 524288;
     let mut a = 0;
     let mut b = 1;
     for _ in 0..n {

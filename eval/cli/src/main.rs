@@ -92,6 +92,9 @@ pub struct PerformanceReport {
     /// The program that is being evaluated.
     pub program: String,
 
+    /// The benchmark size.
+    pub benchmark_size: u64,
+
     /// The prover that is being evaluated.
     pub prover: String,
 
@@ -112,8 +115,8 @@ pub struct PerformanceReport {
     /// The reported speed in cycles per second.
     pub speed: f64,
 
-    /// The reported duration of the execution in seconds.
-    pub execution_duration: f64,
+    /// The reported duration before proving in seconds.
+    pub overhead_duration: f64,
 
     /// The reported duration of the prover in seconds.
     pub prove_duration: f64,
@@ -252,13 +255,14 @@ fn main() {
         writer
             .write_record(&[
                 "program",
+                "benchmark_size",
                 "prover",
                 "hashfn",
                 "shard_size",
                 "shards",
                 "cycles",
                 "speed",
-                "execution_duration",
+                "overhead_duration",
                 "prove_duration",
                 "core_prove_duration",
                 "core_verify_duration",
@@ -277,13 +281,14 @@ fn main() {
     writer
         .serialize(&[
             report.program,
+            report.benchmark_size.to_string(),
             report.prover,
             report.hashfn,
             report.shard_size.to_string(),
             report.shards.to_string(),
             report.cycles.to_string(),
             report.speed.to_string(),
-            report.execution_duration.to_string(),
+            report.overhead_duration.to_string(),
             report.prove_duration.to_string(),
             report.core_prove_duration.to_string(),
             report.core_verify_duration.to_string(),
