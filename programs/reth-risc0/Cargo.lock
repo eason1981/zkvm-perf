@@ -1621,7 +1621,7 @@ version = "3.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "be30eaf4b0a9fba5336683b38de57bb86d179a35862ba6bfcf57625d006bde5b"
 dependencies = [
- "proc-macro-crate 2.0.2",
+ "proc-macro-crate",
  "proc-macro2",
  "quote",
  "syn 1.0.109",
@@ -1691,22 +1691,12 @@ dependencies = [
 
 [[package]]
 name = "proc-macro-crate"
-version = "1.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f4c021e1093a56626774e81216a4ce732a735e5bad4868a03f3ed65ca0c3919"
-dependencies = [
- "once_cell",
- "toml_edit 0.19.15",
-]
-
-[[package]]
-name = "proc-macro-crate"
 version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b00f26d3400549137f92511a46ac1cd8ce37cb5598a96d382381458b992a5d24"
 dependencies = [
  "toml_datetime",
- "toml_edit 0.20.2",
+ "toml_edit",
 ]
 
 [[package]]
@@ -1851,7 +1841,7 @@ checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
 [[package]]
 name = "reth-codecs"
 version = "0.2.0-beta.6"
-source = "git+https://github.com/sp1-patches/reth-new?branch=ratan/feature-gate-secp256k1#d689e5bbb653d545a34cac97d539121d1134fabd"
+source = "git+https://github.com/sp1-patches/reth-new?branch=john/update-for-v1#66727b60652bce3f19cba43d71b0669e960cfb28"
 dependencies = [
  "alloy-eips 0.1.0 (git+https://github.com/alloy-rs/alloy?rev=39b8695)",
  "alloy-primitives",
@@ -1862,7 +1852,7 @@ dependencies = [
 [[package]]
 name = "reth-codecs-derive"
 version = "0.2.0-beta.6"
-source = "git+https://github.com/sp1-patches/reth-new?branch=ratan/feature-gate-secp256k1#d689e5bbb653d545a34cac97d539121d1134fabd"
+source = "git+https://github.com/sp1-patches/reth-new?branch=john/update-for-v1#66727b60652bce3f19cba43d71b0669e960cfb28"
 dependencies = [
  "convert_case 0.6.0",
  "proc-macro2",
@@ -1873,7 +1863,7 @@ dependencies = [
 [[package]]
 name = "reth-ethereum-forks"
 version = "0.2.0-beta.6"
-source = "git+https://github.com/sp1-patches/reth-new?branch=ratan/feature-gate-secp256k1#d689e5bbb653d545a34cac97d539121d1134fabd"
+source = "git+https://github.com/sp1-patches/reth-new?branch=john/update-for-v1#66727b60652bce3f19cba43d71b0669e960cfb28"
 dependencies = [
  "alloy-chains",
  "alloy-primitives",
@@ -1886,7 +1876,7 @@ dependencies = [
 [[package]]
 name = "reth-primitives"
 version = "0.2.0-beta.6"
-source = "git+https://github.com/sp1-patches/reth-new?branch=ratan/feature-gate-secp256k1#d689e5bbb653d545a34cac97d539121d1134fabd"
+source = "git+https://github.com/sp1-patches/reth-new?branch=john/update-for-v1#66727b60652bce3f19cba43d71b0669e960cfb28"
 dependencies = [
  "alloy-chains",
  "alloy-eips 0.1.0 (git+https://github.com/alloy-rs/alloy?rev=39b8695)",
@@ -1913,7 +1903,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_with",
- "sp1-precompiles",
+ "sp1-lib",
  "strum",
  "thiserror",
 ]
@@ -1928,13 +1918,14 @@ dependencies = [
  "revm",
  "revm-primitives",
  "risc0-zkvm",
+ "serde",
  "sp1-reth-primitives",
 ]
 
 [[package]]
 name = "reth-rpc-types"
 version = "0.2.0-beta.6"
-source = "git+https://github.com/sp1-patches/reth-new?branch=ratan/feature-gate-secp256k1#d689e5bbb653d545a34cac97d539121d1134fabd"
+source = "git+https://github.com/sp1-patches/reth-new?branch=john/update-for-v1#66727b60652bce3f19cba43d71b0669e960cfb28"
 dependencies = [
  "alloy-genesis 0.1.0 (git+https://github.com/alloy-rs/alloy?rev=39b8695)",
  "alloy-primitives",
@@ -1955,7 +1946,7 @@ dependencies = [
 [[package]]
 name = "revm"
 version = "8.0.0"
-source = "git+https://github.com/sp1-patches/revm-new?branch=ratan/secp256k1-on-v35#1548f752cfcc89182d80fc1a6a08350e4887bbe6"
+source = "git+https://github.com/sp1-patches/revm-new?branch=john/update-for-v1#eb53e9f613f4c309851144260696791918b31383"
 dependencies = [
  "auto_impl",
  "cfg-if",
@@ -1969,7 +1960,7 @@ dependencies = [
 [[package]]
 name = "revm-interpreter"
 version = "4.0.0"
-source = "git+https://github.com/sp1-patches/revm-new?branch=ratan/secp256k1-on-v35#1548f752cfcc89182d80fc1a6a08350e4887bbe6"
+source = "git+https://github.com/sp1-patches/revm-new?branch=john/update-for-v1#eb53e9f613f4c309851144260696791918b31383"
 dependencies = [
  "revm-primitives",
  "serde",
@@ -1978,7 +1969,7 @@ dependencies = [
 [[package]]
 name = "revm-precompile"
 version = "6.0.0"
-source = "git+https://github.com/sp1-patches/revm-new?branch=ratan/secp256k1-on-v35#1548f752cfcc89182d80fc1a6a08350e4887bbe6"
+source = "git+https://github.com/sp1-patches/revm-new?branch=john/update-for-v1#eb53e9f613f4c309851144260696791918b31383"
 dependencies = [
  "anyhow",
  "aurora-engine-modexp",
@@ -1988,14 +1979,14 @@ dependencies = [
  "revm-primitives",
  "ripemd",
  "sha2",
- "sp1-precompiles",
+ "sp1-lib",
  "substrate-bn",
 ]
 
 [[package]]
 name = "revm-primitives"
 version = "3.1.1"
-source = "git+https://github.com/sp1-patches/revm-new?branch=ratan/secp256k1-on-v35#1548f752cfcc89182d80fc1a6a08350e4887bbe6"
+source = "git+https://github.com/sp1-patches/revm-new?branch=john/update-for-v1#eb53e9f613f4c309851144260696791918b31383"
 dependencies = [
  "alloy-primitives",
  "auto_impl",
@@ -2126,9 +2117,9 @@ dependencies = [
 
 [[package]]
 name = "risc0-zkvm"
-version = "1.0.1"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "774b03337fa1675204a067b3f15be740dbedde63fa46647017140fd023805afb"
+checksum = "bf582a2b8f7ef826ffc0dc2104965b36d47c94bac8847baeaf9ba8d691744026"
 dependencies = [
  "anyhow",
  "bytemuck",
@@ -2282,30 +2273,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e86697c916019a8588c99b5fac3cead74ec0b4b819707a682fd4d23fa0ce1ba1"
 
 [[package]]
-name = "scale-info"
-version = "2.11.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7c453e59a955f81fb62ee5d596b450383d699f152d350e9d23a0db2adb78e4c0"
-dependencies = [
- "cfg-if",
- "derive_more",
- "parity-scale-codec",
- "scale-info-derive",
-]
-
-[[package]]
-name = "scale-info-derive"
-version = "2.11.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "18cf6c6447f813ef19eb450e985bcce6705f9ce7660db221b59093d15c79c4b7"
-dependencies = [
- "proc-macro-crate 1.3.1",
- "proc-macro2",
- "quote",
- "syn 1.0.109",
-]
-
-[[package]]
 name = "sec1"
 version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2345,18 +2312,18 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.199"
+version = "1.0.207"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c9f6e76df036c77cd94996771fb40db98187f096dd0b9af39c6c6e452ba966a"
+checksum = "5665e14a49a4ea1b91029ba7d3bca9f299e1f7cfa194388ccc20f14743e784f2"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.199"
+version = "1.0.207"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "11bd257a6541e141e42ca6d24ae26f7714887b47e89aa739099104c7e4d3b7fc"
+checksum = "6aea2634c86b0e8ef2cfdc0c340baede54ec27b1e46febd7f80dffb2aa44a00e"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2445,36 +2412,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "snowbridge-amcl"
-version = "1.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "460a9ed63cdf03c1b9847e8a12a5f5ba19c4efd5869e4a737e05be25d7c427e5"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
-]
-
-[[package]]
-name = "sp1-precompiles"
-version = "0.1.0"
-source = "git+https://github.com/succinctlabs/sp1.git#5ae11f9c4767ebf412ac04a9be955a626e578c22"
+name = "sp1-lib"
+version = "1.0.1"
+source = "git+https://github.com/succinctlabs/sp1.git?rev=dd032eb23949828d244d1ad1f1569aa78155837c#dd032eb23949828d244d1ad1f1569aa78155837c"
 dependencies = [
  "anyhow",
  "bincode",
  "cfg-if",
- "getrandom",
- "hex",
  "k256",
- "num",
- "rand",
  "serde",
- "snowbridge-amcl",
 ]
 
 [[package]]
 name = "sp1-reth-primitives"
 version = "0.1.0"
-source = "git+https://github.com/succinctlabs/sp1-reth.git?branch=ratan/try-new-revm#356387b0369781eb4164b1f1323d443902c5585a"
+source = "git+https://github.com/succinctlabs/sp1-reth.git?branch=john/update-for-v1#40318ba452dfb7655af88e658469012f7863d15c"
 dependencies = [
  "alloy-primitives",
  "alloy-rlp",
@@ -2701,17 +2653,6 @@ name = "toml_datetime"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7cda73e2f1397b1262d6dfdcef8aafae14d1de7748d66822d3bfeeb6d03e5e4b"
-
-[[package]]
-name = "toml_edit"
-version = "0.19.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b5bb770da30e5cbfde35a2d7b9b8a2c4b8ef89548a7a6aeab5c9a576e3e7421"
-dependencies = [
- "indexmap 2.2.6",
- "toml_datetime",
- "winnow",
-]
 
 [[package]]
 name = "toml_edit"

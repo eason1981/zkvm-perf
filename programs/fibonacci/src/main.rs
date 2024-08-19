@@ -20,8 +20,8 @@ fn fibonacci(n: u32) -> u32 {
 }
 
 pub fn main() {
-    // let result = black_box(fibonacci(black_box(300000)));
-    let result = black_box(fibonacci(black_box(131072)));
+    // let result = black_box(fibonacci(black_box(131072)));
     // let result = black_box(fibonacci(black_box(524288)));
+    let result = black_box(fibonacci(black_box(1048576)));
     println!("result: {}", result);
 }

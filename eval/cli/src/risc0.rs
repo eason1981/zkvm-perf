@@ -1,6 +1,8 @@
 use std::fs;
 use std::time::Instant;
 
+use risc0_zkvm::SuccinctReceipt;
+
 use crate::HashFnId;
 use crate::{get_elf, time_operation, EvalArgs, PerformanceReport, PerformanceReportGenerator};
 
@@ -84,8 +86,8 @@ impl PerformanceReportGenerator for Risc0PerformanceReportGenerator {
         let recursive_proof_size = succinct_receipt.seal.len() * 4;
 
         // Bn254 wrapping duration
-        // let (bn254_proof, bn254_compress_duration) =
-        //     time_operation(|| prover.identity_p254(&compressed_proof).unwrap());
+        let (bn254_proof, bn254_compress_duration) =
+            time_operation(|| prover.identity_p254(&succinct_receipt).unwrap());
 
         // let seal_bytes = bn254_proof.get_seal_bytes();
         // println!("Running groth16 wrapper");
@@ -116,7 +118,7 @@ impl PerformanceReportGenerator for Risc0PerformanceReportGenerator {
             compressed_proof_size: None,
             compressed_proof_duration: None,
             bn254_compress_duration: 0.0,
-            bn254_compress_proof_size: 0,
+            bn254_compress_proof_size: bn254_proof.get_seal_bytes().len(),
             groth16_compress_duration: 0.0,
         }
     }
