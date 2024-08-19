@@ -8,6 +8,7 @@ edition = "2021"
 
 [dependencies]
 sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "v1.1.1" }
+# sp1-zkvm = { path = "../../../sp1/zkvm/entrypoint" }
 risc0-zkvm = { version = "1.0.1", default-features = false, features = [
     "std",
 ] }
