@@ -71,16 +71,16 @@ impl PerformanceReportGenerator for SP1PerformanceReportGenerator {
         let reduce_proof_size = bincode::serialize(&reduce_proof).unwrap();
         println!("Recursive proof size: {}", reduce_proof_size.len());
 
-        let compress_start = std::time::Instant::now();
-        let compressed_proof = prover.shrink(reduce_proof, opt).unwrap();
-        let compress_duration = compress_start.elapsed();
-        let compressed_proof_size = bincode::serialize(&compressed_proof).unwrap();
-        println!(
-            "Done compressing proof before bn254 wrapping: {}",
-            compressed_proof_size.len()
-        );
-
         /*
+            let compress_start = std::time::Instant::now();
+            let compressed_proof = prover.shrink(reduce_proof, opt).unwrap();
+            let compress_duration = compress_start.elapsed();
+            let compressed_proof_size = bincode::serialize(&compressed_proof).unwrap();
+            println!(
+                "Done compressing proof before bn254 wrapping: {}",
+                compressed_proof_size.len()
+            );
+
                 let wrapped_bn_254_start = std::time::Instant::now();
                 let wrapped_bn_254_proof = prover.wrap_bn254(compressed_proof, opt).unwrap();
                 let wrapped_bn_254_duration = wrapped_bn_254_start.elapsed();
@@ -120,7 +120,7 @@ impl PerformanceReportGenerator for SP1PerformanceReportGenerator {
             recursive_prove_duration: reduce_duration.as_secs_f64(),
             recursive_verify_duration: 0.0, // TODO: fill this in.
             recursive_proof_size: reduce_proof_size.len(),
-            compressed_proof_size: Some(compressed_proof_size.len()),
+            compressed_proof_size: None, // Some(compressed_proof_size.len()),
             compressed_proof_duration: None,
             bn254_compress_duration: 0.0,
             bn254_compress_proof_size: 0, // wrapped_bn_254_proof_size.len(),
