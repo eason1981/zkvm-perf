@@ -7,11 +7,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "v1.1.1" }
+# sp1-zkvm = { git = "https://github.com/succinctlabs/sp1", rev = "v1.1.1" }
 # sp1-zkvm = { path = "../../../sp1/zkvm/entrypoint" }
-risc0-zkvm = { version = "1.0.1", default-features = false, features = [
-    "std",
-] }
+sp1-zkvm = { path = "../../../sp1/crates/zkvm/entrypoint" }
+risc0-zkvm = { version = "1.0.5", default-features = false, features = ["std"] }
 
 [features]
 risc0 = []

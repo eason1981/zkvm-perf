@@ -1,11 +1,11 @@
 use crate::{
     get_elf, time_operation, EvalArgs, PerformanceReport, PerformanceReportGenerator, ProgramId,
 };
-use sp1_core::runtime::SP1Context;
-use sp1_core::utils;
-use sp1_core::utils::SP1ProverOpts;
+use sp1_core_executor::SP1Context;
 use sp1_prover::components::DefaultProverComponents;
 use sp1_prover::{utils::get_cycles, SP1Prover, SP1Stdin};
+use sp1_sdk::utils;
+use sp1_stark::SP1ProverOpts;
 use std::env;
 use std::fs;
 use std::time::Instant;
@@ -80,10 +80,12 @@ impl PerformanceReportGenerator for SP1PerformanceReportGenerator {
             compressed_proof_size.len()
         );
 
-        let wrapped_bn_254_start = std::time::Instant::now();
-        let wrapped_bn_254_proof = prover.wrap_bn254(compressed_proof, opt).unwrap();
-        let wrapped_bn_254_duration = wrapped_bn_254_start.elapsed();
-        let wrapped_bn_254_proof_size = bincode::serialize(&wrapped_bn_254_proof).unwrap();
+        /*
+                let wrapped_bn_254_start = std::time::Instant::now();
+                let wrapped_bn_254_proof = prover.wrap_bn254(compressed_proof, opt).unwrap();
+                let wrapped_bn_254_duration = wrapped_bn_254_start.elapsed();
+                let wrapped_bn_254_proof_size = bincode::serialize(&wrapped_bn_254_proof).unwrap();
+        */
 
         // // We use this flag when benchmarking with JOLT, since they don't have groth16.
         // let no_groth16 = match env::var("NO_GROTH16") {
@@ -121,7 +123,7 @@ impl PerformanceReportGenerator for SP1PerformanceReportGenerator {
             compressed_proof_size: Some(compressed_proof_size.len()),
             compressed_proof_duration: None,
             bn254_compress_duration: 0.0,
-            bn254_compress_proof_size: wrapped_bn_254_proof_size.len(),
+            bn254_compress_proof_size: 0, // wrapped_bn_254_proof_size.len(),
             groth16_compress_duration: 0.0,
         }
     }
